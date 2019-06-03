@@ -381,7 +381,11 @@ BotChat_EnterGame
 int BotChat_EnterGame(bot_state_t *bs) {
 	char name[32];
 	float rnd;
-
+	//don't chat in developer mode
+	if ((bot_developer.integer & DEVMODE_FOR_CODERS) ||
+			(bot_developer.integer & DEVMODE_FOR_MAPPERS)) {
+		return qfalse;
+	}
 	if (bot_nochat.integer) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
 	//don't chat in teamplay
@@ -414,7 +418,11 @@ BotChat_ExitGame
 int BotChat_ExitGame(bot_state_t *bs) {
 	char name[32];
 	float rnd;
-
+	//don't chat in developer mode
+	if ((bot_developer.integer & DEVMODE_FOR_CODERS) ||
+			(bot_developer.integer & DEVMODE_FOR_MAPPERS)) {
+		return qfalse;
+	}
 	if (bot_nochat.integer) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
 	//don't chat in teamplay
@@ -447,7 +455,11 @@ BotChat_StartLevel
 int BotChat_StartLevel(bot_state_t *bs) {
 	char name[32];
 	float rnd;
-
+	//don't chat in developer mode
+	if ((bot_developer.integer & DEVMODE_FOR_CODERS) ||
+			(bot_developer.integer & DEVMODE_FOR_MAPPERS)) {
+		return qfalse;
+	}
 	if (bot_nochat.integer) return qfalse;
 	if (BotIsObserver(bs)) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
@@ -479,7 +491,11 @@ BotChat_EndLevel
 int BotChat_EndLevel(bot_state_t *bs) {
 	char name[32];
 	float rnd;
-
+	//don't chat in developer mode
+	if ((bot_developer.integer & DEVMODE_FOR_CODERS) ||
+			(bot_developer.integer & DEVMODE_FOR_MAPPERS)) {
+		return qfalse;
+	}
 	if (bot_nochat.integer) return qfalse;
 	if (BotIsObserver(bs)) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
@@ -539,7 +555,11 @@ BotChat_Death
 int BotChat_Death(bot_state_t *bs) {
 	char name[32];
 	float rnd;
-
+	//don't chat in developer mode
+	if ((bot_developer.integer & DEVMODE_FOR_CODERS) ||
+			(bot_developer.integer & DEVMODE_FOR_MAPPERS)) {
+		return qfalse;
+	}
 	if (bot_nochat.integer) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
 	rnd = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_CHAT_DEATH, 0, 1);
@@ -638,7 +658,11 @@ BotChat_Kill
 int BotChat_Kill(bot_state_t *bs) {
 	char name[32];
 	float rnd;
-
+	//don't chat in developer mode
+	if ((bot_developer.integer & DEVMODE_FOR_CODERS) ||
+			(bot_developer.integer & DEVMODE_FOR_MAPPERS)) {
+		return qfalse;
+	}
 	if (bot_nochat.integer) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
 	rnd = trap_Characteristic_BFloat(bs->character, CHARACTERISTIC_CHAT_KILL, 0, 1);
@@ -700,7 +724,11 @@ BotChat_EnemySuicide
 int BotChat_EnemySuicide(bot_state_t *bs) {
 	char name[32];
 	float rnd;
-
+	//don't chat in developer mode
+	if ((bot_developer.integer & DEVMODE_FOR_CODERS) ||
+			(bot_developer.integer & DEVMODE_FOR_MAPPERS)) {
+		return qfalse;
+	}
 	if (bot_nochat.integer) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
 	if (BotNumActivePlayers() <= 1) return qfalse;
@@ -735,7 +763,11 @@ int BotChat_HitTalking(bot_state_t *bs) {
 	char name[32], *weap;
 	int lasthurt_client;
 	float rnd;
-
+	//don't chat in developer mode
+	if ((bot_developer.integer & DEVMODE_FOR_CODERS) ||
+			(bot_developer.integer & DEVMODE_FOR_MAPPERS)) {
+		return qfalse;
+	}
 	if (bot_nochat.integer) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
 	if (BotNumActivePlayers() <= 1) return qfalse;
@@ -775,7 +807,11 @@ int BotChat_HitNoDeath(bot_state_t *bs) {
 	float rnd;
 	int lasthurt_client;
 	aas_entityinfo_t entinfo;
-
+	//don't chat in developer mode
+	if ((bot_developer.integer & DEVMODE_FOR_CODERS) ||
+			(bot_developer.integer & DEVMODE_FOR_MAPPERS)) {
+		return qfalse;
+	}
 	lasthurt_client = g_entities[bs->client].client->lasthurt_client;
 	if (!lasthurt_client) return qfalse;
 	if (lasthurt_client == bs->client) return qfalse;
@@ -819,7 +855,11 @@ int BotChat_HitNoKill(bot_state_t *bs) {
 	char name[32], *weap;
 	float rnd;
 	aas_entityinfo_t entinfo;
-
+	//don't chat in developer mode
+	if ((bot_developer.integer & DEVMODE_FOR_CODERS) ||
+			(bot_developer.integer & DEVMODE_FOR_MAPPERS)) {
+		return qfalse;
+	}
 	if (bot_nochat.integer) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
 	if (BotNumActivePlayers() <= 1) return qfalse;
@@ -856,7 +896,11 @@ BotChat_Random
 int BotChat_Random(bot_state_t *bs) {
 	float rnd;
 	char name[32];
-
+	//don't chat in developer mode
+	if ((bot_developer.integer & DEVMODE_FOR_CODERS) ||
+			(bot_developer.integer & DEVMODE_FOR_MAPPERS)) {
+		return qfalse;
+	}
 	if (bot_nochat.integer) return qfalse;
 	if (BotIsObserver(bs)) return qfalse;
 	if (bs->lastchat_time > FloatTime() - TIME_BETWEENCHATTING) return qfalse;
