@@ -1977,7 +1977,7 @@ static const char *UI_AIFromName(const char *name)
 			return uiInfo.aliasList[j].ai;
 		}
 	}
-	return "sergei";
+	return "sarge";
 }
 
 #ifndef MISSIONPACK // bk001206
@@ -2025,7 +2025,7 @@ static const char *UI_OpponentLeaderModel(void)
 			return uiInfo.characterList[i].base;
 		}
 	}
-	return "sergei";
+	return "sarge";
 }
 #endif
 
@@ -4147,6 +4147,7 @@ static void UI_RunMenuScript(char **args)
 				}
 			}
 		}
+
 		else if (Q_strequal(name, "updateSPMenu") ) {
 			UI_SetCapFragLimits(qtrue);
 			UI_MapCountByGameType(qtrue);
@@ -4257,6 +4258,9 @@ static void UI_RunMenuScript(char **args)
 		}
 		else if (Q_strequal(name, "resetScores") ) {
 			UI_ClearScores();
+		}
+		else if (Q_stricmp(name, "updateColors") == 0) {
+			RefreshHexColors();
 		}
 		else if (Q_stricmp(name, "RefreshServers") == 0) {
 			UI_StartServerRefresh(qtrue);
@@ -5647,6 +5651,8 @@ static void UI_FeederSelection(float feederID, int index)
 	}
 	else if (feederID == FEEDER_Q3HEADS) {
 		if (index >= 0 && index < uiInfo.q3HeadCount) {
+			trap_Cvar_Set( "team_model", uiInfo.q3HeadNames[index]);
+			trap_Cvar_Set( "team_headmodel", uiInfo.q3HeadNames[index]);
 			trap_Cvar_Set( "model", uiInfo.q3HeadNames[index]);
 			trap_Cvar_Set( "headmodel", uiInfo.q3HeadNames[index]);
 			updateModel = qtrue;
@@ -5654,6 +5660,8 @@ static void UI_FeederSelection(float feederID, int index)
 	}
 	else if (feederID == FEEDER_Q3HEADS_FULL) {
 		if (index >= 0 && index < uiInfo.q3HeadCount2) {
+			trap_Cvar_Set( "team_model", uiInfo.q3HeadNames[index]);
+			trap_Cvar_Set( "team_headmodel", uiInfo.q3HeadNames[index]);
 			trap_Cvar_Set( "model", uiInfo.q3HeadNames2[index]);
 			trap_Cvar_Set( "headmodel", uiInfo.q3HeadNames2[index]);
 			updateModel = qtrue;
@@ -5833,10 +5841,10 @@ static qboolean Character_Parse(char **p)
 			uiInfo.characterList[uiInfo.characterCount].imageName = String_Alloc(va("models/players/heads/%s/icon_default.tga", uiInfo.characterList[uiInfo.characterCount].name));
 
 			if (tempStr && Q_strequal(tempStr, "female")) {
-				uiInfo.characterList[uiInfo.characterCount].base = String_Alloc(va("kyonshi"));
+				uiInfo.characterList[uiInfo.characterCount].base = String_Alloc(va("sarge"));
 			}
 			else if (tempStr && Q_strequal(tempStr, "male")) {
-				uiInfo.characterList[uiInfo.characterCount].base = String_Alloc(va("sergei"));
+				uiInfo.characterList[uiInfo.characterCount].base = String_Alloc(va("sarge"));
 			}
 			else {
 				uiInfo.characterList[uiInfo.characterCount].base = String_Alloc(va("%s",tempStr));
