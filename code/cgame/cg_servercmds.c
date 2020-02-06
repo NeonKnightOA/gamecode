@@ -359,6 +359,8 @@ void CG_ParseServerinfo( void ) {
 	cgs.teamflags = atoi( Info_ValueForKey( info, "teamflags" ) );
 	cgs.fraglimit = atoi( Info_ValueForKey( info, "fraglimit" ) );
 	cgs.capturelimit = atoi( Info_ValueForKey( info, "capturelimit" ) );
+	cgs.harvestlimit = atoi( Info_ValueForKey( info, "harvestlimit" ) );
+	cgs.scorelimit = atoi( Info_ValueForKey( info, "scorelimit" ) );
 	cgs.timelimit = atoi( Info_ValueForKey( info, "timelimit" ) );
 	cgs.maxclients = atoi( Info_ValueForKey( info, "sv_maxclients" ) );
 	cgs.roundtime = atoi( Info_ValueForKey( info, "elimination_roundtime" ) );

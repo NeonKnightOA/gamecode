@@ -292,7 +292,7 @@ void CG_DrawInformation( void ) {
 		y += PROP_HEIGHT;
 	}
 
-	if (!CG_IsATeamGametype(cgs.gametype)) {
+	if (CG_UsesFragLimit(cgs.gametype)) {
 		value = atoi( Info_ValueForKey( info, "fraglimit" ) );
 		if ( value ) {
 			UI_DrawProportionalString( 320, y, va( "fraglimit %i", value ),
@@ -301,10 +301,28 @@ void CG_DrawInformation( void ) {
 		}
 	}
 
-	if (CG_IsATeamGametype(cgs.gametype) && cgs.gametype != GT_TEAM) {
+	if (CG_UsesCaptureLimit(cgs.gametype)) {
 		value = atoi( Info_ValueForKey( info, "capturelimit" ) );
 		if ( value ) {
 			UI_DrawProportionalString( 320, y, va( "capturelimit %i", value ),
+				UI_CENTER|UI_SMALLFONT|UI_DROPSHADOW, colorWhite );
+			y += PROP_HEIGHT;
+		}
+	}
+
+	if (CG_UsesHarvestLimit(cgs.gametype)) {
+		value = atoi( Info_ValueForKey( info, "harvestlimit" ) );
+		if ( value ) {
+			UI_DrawProportionalString( 320, y, va( "harvestlimit %i", value ),
+				UI_CENTER|UI_SMALLFONT|UI_DROPSHADOW, colorWhite );
+			y += PROP_HEIGHT;
+		}
+	}
+
+	if (CG_UsesScoreLimit(cgs.gametype)) {
+		value = atoi( Info_ValueForKey( info, "scorelimit" ) );
+		if ( value ) {
+			UI_DrawProportionalString( 320, y, va( "scorelimit %i", value ),
 				UI_CENTER|UI_SMALLFONT|UI_DROPSHADOW, colorWhite );
 			y += PROP_HEIGHT;
 		}

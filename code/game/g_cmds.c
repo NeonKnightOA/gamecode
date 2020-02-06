@@ -1698,11 +1698,14 @@ void Cmd_CallVote_f( gentity_t *ent ) {
 	} else if ( Q_strequal( arg1, "g_doWarmup" ) ) {
 	} else if ( Q_strequal( arg1, "timelimit" ) ) {
 	} else if ( Q_strequal( arg1, "fraglimit" ) ) {
+	} else if ( Q_strequal( arg1, "capturelimit" ) ) {
+	} else if ( Q_strequal( arg1, "harvestlimit" ) ) {
+	} else if ( Q_strequal( arg1, "scorelimit" ) ) {
 	} else if ( Q_strequal( arg1, "custom" ) ) {
 	} else if ( Q_strequal( arg1, "shuffle" ) ) {
 	} else {
 		trap_SendServerCommand( ent-g_entities, "print \"Invalid vote string.\n\"" );
-		//trap_SendServerCommand( ent-g_entities, "print \"Vote commands are: map_restart, nextmap, map <mapname>, g_gametype <n>, kick <player>, clientkick <clientnum>, g_doWarmup, timelimit <time>, fraglimit <frags>.\n\"" );
+		//trap_SendServerCommand( ent-g_entities, "print \"Vote commands are: map_restart, nextmap, map <mapname>, g_gametype <n>, kick <player>, clientkick <clientnum>, g_doWarmup, timelimit <time>, fraglimit <frags>, harvestlimit <skulls>, scorelimit <points>.\n\"" );
 		buffer[0] = 0;
 		strcat(buffer,"print \"Vote commands are: ");
 		if(allowedVote("map_restart"))
@@ -1727,6 +1730,10 @@ void Cmd_CallVote_f( gentity_t *ent ) {
 			strcat(buffer, "shuffle, ");
 		if(allowedVote("custom"))
 			strcat(buffer, "custom <special>, ");
+		if(allowedVote("harvestlimit"))
+			strcat(buffer, "harvestlimit <skulls>, ");
+		if(allowedVote("scorelimit"))
+			strcat(buffer, "scorelimit <points>, ");
 		buffer[strlen(buffer)-2] = 0;
 		strcat(buffer, ".\"");
 		trap_SendServerCommand( ent-g_entities, buffer);
@@ -1759,6 +1766,10 @@ void Cmd_CallVote_f( gentity_t *ent ) {
 			strcat(buffer, "fraglimit <frags>, ");
 		if(allowedVote("custom"))
 			strcat(buffer, "custom <special>, ");
+		if(allowedVote("harvestlimit"))
+			strcat(buffer, "harvestlimit <skulls>, ");
+		if(allowedVote("scorelimit"))
+			strcat(buffer, "scorelimit <points>, ");
 		buffer[strlen(buffer)-2] = 0;
 		strcat(buffer, ".\"");
 		trap_SendServerCommand( ent-g_entities, buffer);
@@ -1849,7 +1860,8 @@ void Cmd_CallVote_f( gentity_t *ent ) {
 		}
 		//Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ), "%s", level.voteString );
 		Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ), "%s", "Next map?" );
-	} else if ( Q_strequal( arg1, "fraglimit" ) ) {
+	}
+	else if ( Q_strequal( arg1, "fraglimit" ) ) {
 		i = atoi(arg2);
 		if(!allowedFraglimit(i)) {
 			trap_SendServerCommand( ent-g_entities, "print \"Cannot set fraglimit.\n\"" );
@@ -1862,6 +1874,36 @@ void Cmd_CallVote_f( gentity_t *ent ) {
 		}
 		else {
 			Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ), "Remove fraglimit?");
+		}
+	}
+	else if ( Q_strequal( arg1, "harvestlimit" ) ) {
+		i = atoi(arg2);
+		if(!allowedFraglimit(i)) {
+			trap_SendServerCommand( ent-g_entities, "print \"Cannot set harvestlimit.\n\"" );
+			return;
+		}
+
+		Com_sprintf( level.voteString, sizeof( level.voteString ), "%s \"%d\"", arg1, i );
+		if (i) {
+			Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ), "Change harvestlimit to: %d", i );
+		}
+		else {
+			Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ), "Remove harvestlimit?");
+		}
+	}
+	else if ( Q_strequal( arg1, "scorelimit" ) ) {
+		i = atoi(arg2);
+		if(!allowedFraglimit(i)) {
+			trap_SendServerCommand( ent-g_entities, "print \"Cannot set scorelimit.\n\"" );
+			return;
+		}
+
+		Com_sprintf( level.voteString, sizeof( level.voteString ), "%s \"%d\"", arg1, i );
+		if (i) {
+			Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ), "Change scorelimit to: %d", i );
+		}
+		else {
+			Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ), "Remove scorelimit?");
 		}
 	} 
 	else if ( Q_strequal( arg1, "timelimit" ) ) {
