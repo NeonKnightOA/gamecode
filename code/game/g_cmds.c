@@ -666,8 +666,9 @@ void Cmd_DropRune_f( gentity_t *ent ) {
 	if (!ent) {
 		return;
 	}
-
-	TossClientPersistantPowerups(ent);
+	if (g_runes.integer >= G_RUNES_ENABLE_TOSS) {
+		TossClientPersistantPowerups(ent);
+	}
 }
 /*
 ==================
