@@ -1248,17 +1248,17 @@ static void CG_DrawKiller(rectDef_t *rect, float scale, vec4_t color, qhandle_t 
 static void CG_DrawCapFragLimit(rectDef_t *rect, float scale, vec4_t color, qhandle_t shader, int textStyle)
 {
 	int limit;
-	if (CG_UsesCaptureLimit(cgs.gametype)) {
-		limit = cgs.capturelimit;
-	}
 	if (CG_UsesFragLimit(cgs.gametype)) {
 		limit = cgs.fraglimit;
 	}
-	if (CG_UsesScoreLimit(cgs.gametype)) {
+	else if (CG_UsesScoreLimit(cgs.gametype)) {
 		limit = cgs.scorelimit;
 	}
-	if (CG_UsesHarvestLimit(cgs.gametype)) {
+	else if (CG_UsesHarvestLimit(cgs.gametype)) {
 		limit = cgs.harvestlimit;
+	}
+	else {
+		limit = cgs.capturelimit;
 	}
 	CG_Text_Paint(rect->x, rect->y, scale, color, va("%2i", limit),0, 0, textStyle);
 }

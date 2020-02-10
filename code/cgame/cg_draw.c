@@ -1755,12 +1755,12 @@ static float CG_DrawScores(float y) {
 
 		if (CG_UsesFragLimit(cgs.gametype)) {
 			v = cgs.fraglimit;
-		} else if (CG_UsesCaptureLimit(cgs.gametype)) {
-			v = cgs.capturelimit;
 		} else if (CG_UsesHarvestLimit(cgs.gametype)) {
 			v = cgs.harvestlimit;
 		} else if (CG_UsesScoreLimit(cgs.gametype)) {
 			v = cgs.scorelimit;
+		} else {
+			v = cgs.capturelimit;
 		}
 		if (v) {
 			s = va("%2i", v);
