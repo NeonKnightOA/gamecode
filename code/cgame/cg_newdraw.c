@@ -1254,9 +1254,6 @@ static void CG_DrawCapFragLimit(rectDef_t *rect, float scale, vec4_t color, qhan
 	else if (CG_UsesScoreLimit(cgs.gametype)) {
 		limit = cgs.scorelimit;
 	}
-	else if (CG_UsesHarvestLimit(cgs.gametype)) {
-		limit = cgs.harvestlimit;
-	}
 	else {
 		limit = cgs.capturelimit;
 	}
@@ -2008,19 +2005,6 @@ static void CG_DrawScoreLimit( rectDef_t *rect, float text_x, float text_y, vec4
 	}
 }
 
-// N_K: New extensions.
-static void CG_DrawHarvestLimit( rectDef_t *rect, float text_x, float text_y, vec4_t color, float scale, int align, int textStyle )
-{
-	const char *info;
-	int			value;
-	info = CG_ConfigString( CS_SERVERINFO );
-	value = atoi( Info_ValueForKey( info, "harvestlimit" ) );
-
-	if ( value ) {
-		CG_DrawLoadingString( rect, text_x, text_y, color, scale, align, textStyle, va( "%i", value ));
-	}
-}
-
 
 #endif
 // end loadingscreen
@@ -2249,9 +2233,6 @@ void CG_OwnerDraw(float x, float y, float w, float h, float text_x, float text_y
 		break;
 	case CG_LOAD_CAPTURELIMIT:
 		CG_DrawCaptureLimit( &rect, text_x, text_y, color, scale, align, textStyle );
-		break;
-	case CG_LOAD_HARVESTLIMIT:
-		CG_DrawHarvestLimit( &rect, text_x, text_y, color, scale, align, textStyle );
 		break;
 	case CG_LOAD_SCORELIMIT:
 		CG_DrawScoreLimit( &rect, text_x, text_y, color, scale, align, textStyle );

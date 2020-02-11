@@ -1755,8 +1755,6 @@ static float CG_DrawScores(float y) {
 
 		if (CG_UsesFragLimit(cgs.gametype)) {
 			v = cgs.fraglimit;
-		} else if (CG_UsesHarvestLimit(cgs.gametype)) {
-			v = cgs.harvestlimit;
 		} else if (CG_UsesScoreLimit(cgs.gametype)) {
 			v = cgs.scorelimit;
 		} else {
@@ -1837,15 +1835,8 @@ static float CG_DrawScores(float y) {
 			CG_DrawBigString(x + 4, y, s, 1.0F);
 		}
 
-		if (cgs.harvestlimit && CG_UsesHarvestLimit(cgs.gametype)) {
-			s = va("%2i", cgs.harvestlimit);
-			w = CG_DrawStrlen(s) * BIGCHAR_WIDTH + 8;
-			x -= w;
-			CG_DrawBigString(x + 4, y, s, 1.0F);
-		}
-
 		if (cgs.capturelimit && CG_UsesCaptureLimit(cgs.gametype)) {
-			s = va("%2i", cgs.harvestlimit);
+			s = va("%2i", cgs.capturelimit);
 			w = CG_DrawStrlen(s) * BIGCHAR_WIDTH + 8;
 			x -= w;
 			CG_DrawBigString(x + 4, y, s, 1.0F);

@@ -262,7 +262,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CG_LOAD_FRAGLIMIT         86	// leilei 
 #define CG_LOAD_TIMELIMIT         87	// leilei 
 #define CG_LOAD_CAPTURELIMIT      88	// leilei 
-#define CG_LOAD_HARVESTLIMIT      89	// N_K
 #define CG_LOAD_SCORELIMIT       101	// N_K
 // end HUD extensions
 

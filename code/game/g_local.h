@@ -1000,7 +1000,6 @@ extern int allowedMap(const char *mapname);
 extern int allowedGametype(const char *gametypeStr);
 extern int allowedTimelimit(int limit);
 extern int allowedFraglimit(int limit);
-extern int allowedHarvestlimit(int limit);
 extern int allowedScorelimit(int limit);
 extern int VoteParseCustomVotes( void );
 extern t_customvote getCustomVote(char* votecommand);
@@ -1045,7 +1044,6 @@ extern vmCvar_t g_voteflags;
 extern vmCvar_t g_fraglimit;
 extern vmCvar_t g_timelimit;
 extern vmCvar_t g_capturelimit;
-extern vmCvar_t g_harvestlimit;
 extern vmCvar_t g_scorelimit;
 extern vmCvar_t g_friendlyFire;
 extern vmCvar_t g_password;
@@ -1141,8 +1139,6 @@ extern vmCvar_t g_voteMinTimelimit;
 extern vmCvar_t g_voteMaxTimelimit;
 extern vmCvar_t g_voteMinFraglimit;
 extern vmCvar_t g_voteMaxFraglimit;
-extern vmCvar_t g_voteMinHarvestlimit;
-extern vmCvar_t g_voteMaxHarvestlimit;
 extern vmCvar_t g_voteMinScorelimit;
 extern vmCvar_t g_voteMaxScorelimit;
 extern vmCvar_t g_maxvotes;
@@ -1443,6 +1439,5 @@ qboolean G_IsARoundBasedGametype(int check);	/* Whether the gametype uses the ne
 /* Neon_Knight: Useful limit checks in order to have code consistency. */
 qboolean G_UsesFragLimit(int check);
 qboolean G_UsesCaptureLimit(int check);
-qboolean G_UsesHarvestLimit(int check);
 qboolean G_UsesScoreLimit(int check);
 /* /Neon_Knight */

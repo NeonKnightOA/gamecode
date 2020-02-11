@@ -69,7 +69,6 @@ typedef struct
 	qboolean        gametype;
 	qboolean        fraglimit;
 	qboolean        scorelimit;
-	qboolean        harvestlimit;
 	qboolean        timelimit;
 	qboolean        custom;
 } votemenu_logic_t;
@@ -96,7 +95,6 @@ static ui_menuitem_t s_items[] = {
 	{ID_FRAG,"Change fraglimit", &s_votemenu_logic.fraglimit},
 	{ID_TIME,"Change timelimit", &s_votemenu_logic.timelimit},
 	{ID_CUSTOM,"Custom vote", &s_votemenu_logic.custom},
-	{ID_HARVEST,"Change harvestlimit", &s_votemenu_logic.harvestlimit},
 	{ID_SCORE,"Change scorelimit", &s_votemenu_logic.scorelimit},
 	{ID_YES,"Vote yes", &alwaysTrue},
 	{ID_NO,"Vote no", &alwaysTrue}
@@ -135,7 +133,6 @@ static void VoteMenu_CheckVoteNames( void ) {
 	s_votemenu_logic.g_doWarmup = voteflags&VF_g_doWarmup;
 	s_votemenu_logic.timelimit = voteflags&VF_timelimit;
 	s_votemenu_logic.fraglimit = voteflags&VF_fraglimit;
-	s_votemenu_logic.harvestlimit = voteflags&VF_harvestLimit;
 	s_votemenu_logic.scorelimit = voteflags&VF_scoreLimit;
 	s_votemenu_logic.custom = voteflags&VF_custom;
 }
@@ -175,10 +172,6 @@ static void VoteMenu_Event( void* ptr, int event )
 			break;
 		case ID_FRAG:
 			UI_VoteFraglimitMenu();
-			//Don't pop! It will do a double pop if successfull
-			break;
-		case ID_HARVEST:
-			UI_VoteHarvestlimitMenu();
 			//Don't pop! It will do a double pop if successfull
 			break;
 		case ID_SCORE:

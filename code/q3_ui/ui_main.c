@@ -115,7 +115,7 @@ vmCvar_t ui_1fctf_friendly;
 vmCvar_t ui_overload_capturelimit;
 vmCvar_t ui_overload_timelimit;
 vmCvar_t ui_overload_friendly;
-vmCvar_t ui_harvester_harvestlimit;
+vmCvar_t ui_harvester_fraglimit;
 vmCvar_t ui_harvester_timelimit;
 vmCvar_t ui_harvester_friendly;
 vmCvar_t ui_elimination_capturelimit;
@@ -199,7 +199,7 @@ static cvarTable_t cvarTable[] = {
 	{ &ui_overload_timelimit, "ui_overload_timelimit", "30", CVAR_ARCHIVE },
 	{ &ui_overload_friendly, "ui_overload_friendly",  "0", CVAR_ARCHIVE },
 
-	{ &ui_harvester_harvestlimit, "ui_harvester_harvestlimit", "30", CVAR_ARCHIVE },
+	{ &ui_harvester_fraglimit, "ui_harvester_fraglimit", "30", CVAR_ARCHIVE },
 	{ &ui_harvester_timelimit, "ui_harvester_timelimit", "30", CVAR_ARCHIVE },
 	{ &ui_harvester_friendly, "ui_harvester_friendly",  "0", CVAR_ARCHIVE },
 
@@ -389,15 +389,5 @@ Checks if the gametype uses scorelimit.
  */
 qboolean UI_UsesScoreLimit(int check) {
 	return GAMETYPE_USES_SCORE_LIMIT(check);
-}
-/*
-===================
-UI_UsesHarvestLimit
-
-Checks if the gametype uses harvestlimit.
-===================
- */
-qboolean UI_UsesHarvestLimit(int check) {
-	return GAMETYPE_USES_HARVEST_LIMIT(check);
 }
 /* /Neon_Knight */

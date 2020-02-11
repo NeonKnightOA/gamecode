@@ -2779,14 +2779,4 @@ Checks if the gametype uses scorelimit.
 qboolean CG_UsesScoreLimit(int check) {
 	return GAMETYPE_USES_SCORE_LIMIT(check);
 }
-/*
-===================
-CG_UsesHarvestLimit
-
-Checks if the gametype uses harvestlimit.
-===================
- */
-qboolean CG_UsesHarvestLimit(int check) {
-	return GAMETYPE_USES_HARVEST_LIMIT(check);
-}
 /* /Neon_Knight */

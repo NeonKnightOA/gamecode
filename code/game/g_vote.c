@@ -234,24 +234,6 @@ int allowedFraglimit(int limit) {
 
 /*
 ==================
-allowedHarvestlimit
-==================
- */
-int allowedHarvestlimit(int limit) {
-	int min, max;
-	min = g_voteMinHarvestlimit.integer;
-	max = g_voteMaxHarvestlimit.integer;
-	if(limit<min && limit != 0)
-		return qfalse;
-	if(max != 0 && limit>max)
-		return qfalse;
-	if(limit==0 && max > 0)
-		return qfalse;
-	return qtrue;
-}
-
-/*
-==================
 allowedScorelimit
 ==================
  */

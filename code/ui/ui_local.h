@@ -48,7 +48,7 @@ extern vmCvar_t ui_1fctf_friendly;
 extern vmCvar_t ui_overload_capturelimit;
 extern vmCvar_t ui_overload_timelimit;
 extern vmCvar_t ui_overload_friendly;
-extern vmCvar_t ui_harvester_harvestlimit;
+extern vmCvar_t ui_harvester_fraglimit;
 extern vmCvar_t ui_harvester_timelimit;
 extern vmCvar_t ui_harvester_friendly;
 extern vmCvar_t ui_elimination_capturelimit;
@@ -155,7 +155,6 @@ extern vmCvar_t ui_Q3Model;
 extern vmCvar_t ui_hudFiles;
 extern vmCvar_t ui_recordSPDemo;
 extern vmCvar_t ui_realCaptureLimit;
-extern vmCvar_t ui_realHarvestLimit;
 extern vmCvar_t ui_realScoreLimit;
 extern vmCvar_t ui_realWarmUp;
 // Changed RD
@@ -832,7 +831,6 @@ typedef struct {
 	const char *special;
 	int fraglimit;
 	int capturelimit;
-	int harvestlimit;
 	int scorelimit;
 // end changed RD
 	int teamMembers;
@@ -1329,6 +1327,5 @@ qboolean UI_IsARoundBasedGametype(int check);	/* Whether the gametype uses the n
 /* Neon_Knight: Useful limit checks in order to have code consistency. */
 qboolean UI_UsesFragLimit(int check);
 qboolean UI_UsesCaptureLimit(int check);
-qboolean UI_UsesHarvestLimit(int check);
 qboolean UI_UsesScoreLimit(int check);
 /* /Neon_Knight */

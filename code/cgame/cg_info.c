@@ -310,15 +310,6 @@ void CG_DrawInformation( void ) {
 		}
 	}
 
-	if (CG_UsesHarvestLimit(cgs.gametype)) {
-		value = atoi( Info_ValueForKey( info, "harvestlimit" ) );
-		if ( value ) {
-			UI_DrawProportionalString( 320, y, va( "harvestlimit %i", value ),
-				UI_CENTER|UI_SMALLFONT|UI_DROPSHADOW, colorWhite );
-			y += PROP_HEIGHT;
-		}
-	}
-
 	if (CG_UsesScoreLimit(cgs.gametype)) {
 		value = atoi( Info_ValueForKey( info, "scorelimit" ) );
 		if ( value ) {

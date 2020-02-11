@@ -1177,7 +1177,6 @@ typedef struct {
 	int				teamflags;
 	int				fraglimit;
 	int				capturelimit;
-	int				harvestlimit;
 	int				scorelimit;
 	int				timelimit;
 	int				maxclients;
@@ -2049,6 +2048,5 @@ qboolean CG_IsARoundBasedGametype(int check);	/* Whether the gametype uses the n
 /* Neon_Knight: Useful limit checks in order to have code consistency. */
 qboolean CG_UsesFragLimit(int check);
 qboolean CG_UsesCaptureLimit(int check);
-qboolean CG_UsesHarvestLimit(int check);
 qboolean CG_UsesScoreLimit(int check);
 /* /Neon_Knight */

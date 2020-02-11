@@ -146,9 +146,8 @@ typedef enum {
 /*
  Limits
  */
-#define GAMETYPE_USES_FRAG_LIMIT(gametype) (gametype == GT_FFA || gametype == GT_TOURNAMENT || gametype == GT_TEAM || gametype == GT_LMS)
+#define GAMETYPE_USES_FRAG_LIMIT(gametype) (gametype == GT_FFA || gametype == GT_TOURNAMENT || gametype == GT_TEAM || gametype == GT_HARVESTER || gametype == GT_LMS)
 #define GAMETYPE_USES_CAPTURE_LIMIT(gametype) (gametype == GT_CTF || gametype == GT_1FCTF || gametype == GT_OBELISK || gametype == GT_ELIMINATION || gametype == GT_CTF_ELIMINATION || gametype == GT_DOUBLE_D)
-#define GAMETYPE_USES_HARVEST_LIMIT(gametype) (gametype == GT_HARVESTER)
 #define GAMETYPE_USES_SCORE_LIMIT(gametype) (gametype == GT_DOMINATION || gametype == GT_POSSESSION)
 
 typedef enum { GENDER_MALE, GENDER_FEMALE, GENDER_NEUTER } gender_t;
@@ -759,7 +758,7 @@ qboolean	BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const play
 
 //g_voteflags->integer
 //Autoparsed from allowedvote
-//List: "/map_restart/nextmap/map/g_gametype/kick/clientkick/g_doWarmup/timelimit/fraglimit/custom/shuffle/harvestlimit/scorelimit/"
+//List: "/map_restart/nextmap/map/g_gametype/kick/clientkick/g_doWarmup/timelimit/fraglimit/custom/shuffle/scorelimit/"
 #define VF_map_restart  1
 #define VF_nextmap      2
 #define VF_map          4
@@ -771,8 +770,7 @@ qboolean	BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const play
 #define VF_fraglimit    128
 #define VF_custom       256
 #define VF_shuffle      512
-#define VF_harvestLimit 1024
-#define VF_scoreLimit   2048
+#define VF_scoreLimit   1024
 
 // content masks
 #define	MASK_ALL				(-1)
@@ -873,7 +871,6 @@ typedef struct mapinfo_result_s {
 	int timeLimit;
 	int fragLimit;
 	int captureLimit;
-	int harvestLimit;
 	int scoreLimit;
 	char mpBots[1024];
 	char author[64];

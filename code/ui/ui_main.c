@@ -1430,13 +1430,11 @@ static void UI_SetCapFragLimits(qboolean uiVars)
 		if (uiVars == qtrue) {
 			trap_Cvar_Set("ui_captureLimit", va("%d", cap));
 			trap_Cvar_Set("ui_fragLimit", va("%d", frag));
-			trap_Cvar_Set("ui_harvestLimit", va("%d", harv));
 			trap_Cvar_Set("ui_scoreLimit", va("%d", score));
 		}
 		else if (uiVars == qfalse) {
 			trap_Cvar_Set("capturelimit", va("%d", cap));
 			trap_Cvar_Set("fraglimit", va("%d", frag));
-			trap_Cvar_Set("harvestLimit", va("%d", harv));
 			trap_Cvar_Set("scoreLimit", va("%d", score));
 		}
 	}
@@ -1445,25 +1443,16 @@ static void UI_SetCapFragLimits(qboolean uiVars)
 		if (UI_UsesFragLimit(uiInfo.gameTypes[ui_gameType.integer].gtEnum)) {
 			cap = 0;
 			frag = 10;
-			harv = 0;
 			score = 0;
 		}
 		if (UI_UsesCaptureLimit(uiInfo.gameTypes[ui_gameType.integer].gtEnum)) {
 			cap = 5;
 			frag = 0;
-			harv = 0;
-			score = 0;
-		}
-		if (UI_UsesHarvestLimit(uiInfo.gameTypes[ui_gameType.integer].gtEnum)) {
-			cap = 0;
-			frag = 0;
-			harv = 30;
 			score = 0;
 		}
 		if (UI_UsesScoreLimit(uiInfo.gameTypes[ui_gameType.integer].gtEnum)) {
 			frag = 0;
 			cap = 0;
-			harv = 0;
 			score = 150;
 		}
 	}
@@ -3786,8 +3775,6 @@ static void UI_StartSkirmish(qboolean next, char *name)
 	trap_Cvar_Set("ui_saveCaptureLimit", va("%i", temp));
 	temp = trap_Cvar_VariableValue( "fraglimit" );
 	trap_Cvar_Set("ui_saveFragLimit", va("%i", temp));
-	temp = trap_Cvar_VariableValue( "harvestlimit" );
-	trap_Cvar_Set("ui_saveHarvestLimit", va("%i", temp));
 	temp = trap_Cvar_VariableValue( "scorelimit" );
 	trap_Cvar_Set("ui_saveScoreLimit", va("%i", temp));
 	/* Neon_Knight: Since the SP uses custom time limits, pass it as well. */
@@ -5030,7 +5017,6 @@ serverStatusCvar_t serverStatusCvars[] = {
 	{"timelimit", ""},
 	{"fraglimit", ""},
 	{"capturelimit", ""},
-	{"harvestlimit", ""},
 	{"scorelimit", ""},
 	{NULL, NULL}
 };
@@ -7041,7 +7027,7 @@ vmCvar_t ui_1fctf_friendly;
 vmCvar_t ui_overload_capturelimit;
 vmCvar_t ui_overload_timelimit;
 vmCvar_t ui_overload_friendly;
-vmCvar_t ui_harvester_harvestlimit;
+vmCvar_t ui_harvester_fraglimit;
 vmCvar_t ui_harvester_timelimit;
 vmCvar_t ui_harvester_friendly;
 vmCvar_t ui_elimination_capturelimit;
@@ -7146,7 +7132,6 @@ vmCvar_t ui_scoreShutoutBonus;
 vmCvar_t ui_scoreTime;
 vmCvar_t ui_captureLimit;
 vmCvar_t ui_fragLimit;
-vmCvar_t ui_harvestLimit;
 vmCvar_t ui_scoreLimit;
 vmCvar_t ui_smallFont;
 vmCvar_t ui_bigFont;
@@ -7155,7 +7140,6 @@ vmCvar_t ui_Q3Model;
 vmCvar_t ui_hudFiles;
 vmCvar_t ui_recordSPDemo;
 vmCvar_t ui_realCaptureLimit;
-vmCvar_t ui_realHarvestLimit;
 vmCvar_t ui_realScoreLimit;
 vmCvar_t ui_realWarmUp;
 vmCvar_t ui_serverStatusTimeOut;
@@ -7216,7 +7200,7 @@ static cvarTable_t		cvarTable[] = {
 	{ &ui_overload_timelimit, "ui_overload_timelimit", "30", CVAR_ARCHIVE },
 	{ &ui_overload_friendly, "ui_overload_friendly",  "0", CVAR_ARCHIVE },
 
-	{ &ui_harvester_harvestlimit, "ui_harvester_harvestlimit", "30", CVAR_ARCHIVE },
+	{ &ui_harvester_fraglimit, "ui_harvester_fraglimit", "30", CVAR_ARCHIVE },
 	{ &ui_harvester_timelimit, "ui_harvester_timelimit", "30", CVAR_ARCHIVE },
 	{ &ui_harvester_friendly, "ui_harvester_friendly",  "0", CVAR_ARCHIVE },
 
@@ -7335,7 +7319,6 @@ static cvarTable_t		cvarTable[] = {
 	{ &ui_scoreShutoutBonus, "ui_scoreShutoutBonus", "0", CVAR_ARCHIVE},
 	{ &ui_fragLimit, "ui_fragLimit", "15", 0},
 	{ &ui_captureLimit, "ui_captureLimit", "5", 0},
-	{ &ui_harvestLimit, "ui_harvestLimit", "30", 0},
 	{ &ui_scoreLimit, "ui_scoreLimit", "100", 0},
 	{ &ui_smallFont, "ui_smallFont", "0.25", CVAR_ARCHIVE},
 	{ &ui_bigFont, "ui_bigFont", "0.4", CVAR_ARCHIVE},
@@ -7346,7 +7329,6 @@ static cvarTable_t		cvarTable[] = {
 	{ &ui_teamArenaFirstRun, "ui_teamArenaFirstRun", "0", CVAR_ARCHIVE},
 	{ &ui_realWarmUp, "g_warmup", "20", CVAR_ARCHIVE},
 	{ &ui_realCaptureLimit, "capturelimit", "5", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART},
-	{ &ui_realHarvestLimit, "harvestlimit", "30", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART},
 	{ &ui_realScoreLimit, "scorelimit", "100", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART},
 	{ &ui_serverStatusTimeOut, "ui_serverStatusTimeOut", "7000", CVAR_ARCHIVE},
 	{ &ui_humansonly, "ui_humansonly", "0", CVAR_ARCHIVE},
@@ -7628,15 +7610,5 @@ Checks if the gametype uses scorelimit.
  */
 qboolean UI_UsesScoreLimit(int check) {
 	return GAMETYPE_USES_SCORE_LIMIT(check);
-}
-/*
-===================
-UI_UsesHarvestLimit
-
-Checks if the gametype uses harvestlimit.
-===================
- */
-qboolean UI_UsesHarvestLimit(int check) {
-	return GAMETYPE_USES_HARVEST_LIMIT(check);
 }
 /* /Neon_Knight */

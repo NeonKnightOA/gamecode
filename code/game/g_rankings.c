@@ -142,7 +142,6 @@ void G_RankRunFrame()
 		// don't let ranked games last forever
 		if( ((g_fraglimit.integer == 0) || (g_fraglimit.integer > 100) ||
 			(g_capturelimit.integer == 0) || (g_capturelimit.integer > 50) ||
-			(g_harvestlimit.integer == 0) || (g_harvestlimit.integer > 500) ||
 			(g_scorelimit.integer == 0) || (g_scorelimit.integer > 1000)) && 
 			((g_timelimit.integer == 0) || (g_timelimit.integer > 1000)) )
 		{
@@ -1112,11 +1111,6 @@ void G_RankGameOver( void )
 		// capturelimit
 		num = trap_Cvar_VariableIntegerValue("capturelimit");
 		trap_RankReportInt( -1, -1, QGR_KEY_CAPTURELIMIT, num, 0 );
-	}
-	else if (G_UsesHarvestLimit(g_gametype.integer)) {
-		// harvestlimit
-		num = trap_Cvar_VariableIntegerValue("harvestlimit");
-		trap_RankReportInt( -1, -1, QGR_KEY_HARVESTLIMIT, num, 0 );
 	}
 	else if (G_UsesScoreLimit(g_gametype.integer)) {
 		// scorelimit

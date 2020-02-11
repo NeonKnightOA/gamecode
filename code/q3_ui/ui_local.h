@@ -54,7 +54,7 @@ extern vmCvar_t ui_1fctf_friendly;
 extern vmCvar_t ui_overload_capturelimit;
 extern vmCvar_t ui_overload_timelimit;
 extern vmCvar_t ui_overload_friendly;
-extern vmCvar_t ui_harvester_harvestlimit;
+extern vmCvar_t ui_harvester_fraglimit;
 extern vmCvar_t ui_harvester_timelimit;
 extern vmCvar_t ui_harvester_friendly;
 extern vmCvar_t ui_elimination_capturelimit;
@@ -506,11 +506,6 @@ extern void UI_VoteMenuMenu( void );
 extern void UI_VoteFraglimitMenu( void );
 
 //
-// ui_votemenu_harvestlimit.c
-//
-extern void UI_VoteHarvestlimitMenu( void );
-
-//
 // ui_votemenu_scorelimit.c
 //
 extern void UI_VoteScorelimitMenu( void );
@@ -918,6 +913,5 @@ qboolean UI_IsARoundBasedGametype(int check);	/* Whether the gametype uses the n
 /* Neon_Knight: Useful limit checks in order to have code consistency. */
 qboolean UI_UsesFragLimit(int check);
 qboolean UI_UsesCaptureLimit(int check);
-qboolean UI_UsesHarvestLimit(int check);
 qboolean UI_UsesScoreLimit(int check);
 /* /Neon_Knight */

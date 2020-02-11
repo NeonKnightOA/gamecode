@@ -794,7 +794,6 @@ typedef struct {
 	menufield_s			timelimit;
 	menufield_s			fraglimit;
 	menufield_s			capturelimit;
-	menufield_s			harvestlimit;
 	menufield_s			scorelimit;
 	menuradiobutton_s	friendlyfire;
 	menufield_s			hostname;
@@ -901,7 +900,6 @@ static void ServerOptions_Start( void ) {
 	int		timelimit;
 	int		fraglimit;
 	int		capturelimit;
-	int		harvestlimit;
 	int		scorelimit;
 	int		maxclients;
 	int		friendlyfire;
@@ -921,7 +919,6 @@ static void ServerOptions_Start( void ) {
 	timelimit	 = atoi( s_serveroptions.timelimit.field.buffer );
 	fraglimit	 = atoi( s_serveroptions.fraglimit.field.buffer );
 	capturelimit	 = atoi( s_serveroptions.capturelimit.field.buffer );
-	harvestlimit	 = atoi( s_serveroptions.harvestlimit.field.buffer );
 	scorelimit	 = atoi( s_serveroptions.scorelimit.field.buffer );
 	friendlyfire = s_serveroptions.friendlyfire.curvalue;
 	pure		 = s_serveroptions.pure.curvalue;
@@ -982,7 +979,7 @@ static void ServerOptions_Start( void ) {
 		break;
                 
 	case GT_HARVESTER:
-		trap_Cvar_SetValue( "ui_harvester_harvestlimit", harvestlimit );
+		trap_Cvar_SetValue( "ui_harvester_fraglimit", fraglimit );
 		trap_Cvar_SetValue( "ui_harvester_timelimit", timelimit );
 		trap_Cvar_SetValue( "ui_harvester_friendly", friendlyfire );
 		break;
@@ -1027,7 +1024,6 @@ static void ServerOptions_Start( void ) {
 	trap_Cvar_SetValue ("timelimit", Com_Clamp( 0, timelimit, timelimit ) );
 	trap_Cvar_SetValue ("fraglimit", Com_Clamp( 0, fraglimit, fraglimit ) );
 	trap_Cvar_SetValue ("capturelimit", Com_Clamp( 0, capturelimit, capturelimit ) );
-	trap_Cvar_SetValue ("harvestlimit", Com_Clamp( 0, harvestlimit, harvestlimit ) );
 	trap_Cvar_SetValue ("scorelimit", Com_Clamp( 0, scorelimit, scorelimit ) );
 	trap_Cvar_SetValue( "g_friendlyfire", friendlyfire );
 	trap_Cvar_SetValue( "sv_pure", pure );
@@ -1501,7 +1497,7 @@ static void ServerOptions_SetMenuItems( void ) {
 		break;
                 
 	case GT_HARVESTER:
-		Com_sprintf( s_serveroptions.harvestlimit.field.buffer, 4, "%i", (int)Com_Clamp( 0, 100, trap_Cvar_VariableValue( "ui_harvester_harvestlimit" ) ) );
+		Com_sprintf( s_serveroptions.fraglimit.field.buffer, 4, "%i", (int)Com_Clamp( 0, 100, trap_Cvar_VariableValue( "ui_harvester_fraglimit" ) ) );
 		Com_sprintf( s_serveroptions.timelimit.field.buffer, 4, "%i", (int)Com_Clamp( 0, 999, trap_Cvar_VariableValue( "ui_harvester_timelimit" ) ) );
 		s_serveroptions.friendlyfire.curvalue = (int)Com_Clamp( 0, 1, trap_Cvar_VariableValue( "ui_harvester_friendly" ) );
 		break;
@@ -1687,16 +1683,6 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 		s_serveroptions.capturelimit.generic.statusbar  = ServerOptions_StatusBar;
 		s_serveroptions.capturelimit.field.widthInChars = 3;
 		s_serveroptions.capturelimit.field.maxchars     = 3;
-	}
-	else if (UI_UsesHarvestLimit(s_serveroptions.gametype)) {
-		s_serveroptions.harvestlimit.generic.type       = MTYPE_FIELD;
-		s_serveroptions.harvestlimit.generic.name       = "Harvest Limit:";
-		s_serveroptions.harvestlimit.generic.flags      = QMF_NUMBERSONLY|QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-		s_serveroptions.harvestlimit.generic.x	        = OPTIONS_X;
-		s_serveroptions.harvestlimit.generic.y	        = y;
-		s_serveroptions.harvestlimit.generic.statusbar  = ServerOptions_StatusBar;
-		s_serveroptions.harvestlimit.field.widthInChars = 3;
-		s_serveroptions.harvestlimit.field.maxchars     = 3;
 	}
 	else if (UI_UsesScoreLimit(s_serveroptions.gametype)) {
 		s_serveroptions.scorelimit.generic.type         = MTYPE_FIELD;
@@ -1908,9 +1894,6 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 	}
 	else if(UI_UsesCaptureLimit(s_serveroptions.gametype)) {
 		Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.capturelimit );
-	}
-	else if(UI_UsesHarvestLimit(s_serveroptions.gametype)) {
-		Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.harvestlimit );
 	}
 	else if(UI_UsesScoreLimit(s_serveroptions.gametype)) {
 		Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.scorelimit );
