@@ -1878,6 +1878,59 @@ void BotUpdateBattleInventory(bot_state_t *bs, int enemy) {
 
 /*
 ==================
+BotUseTeleporter
+==================
+ */
+void BotUseTeleporter(bot_state_t *bs) {
+	float selfPreservation;
+
+	//if the bot has no teleporter
+	if (bs->inventory[INVENTORY_TELEPORTER] <= 0)
+		return;
+	//if the bot has enough health to survive
+	if (bs->inventory[INVENTORY_HEALTH] > 40)
+		return;
+	// if the bot is NOT carrying a key objective
+	if (G_UsesTeamFlags(gametype) && BotCTFCarryingFlag(bs))
+		return;
+	if (G_UsesTheWhiteFlag(gametype) && Bot1FCTFCarryingFlag(bs))
+		return;
+	if (gametype == GT_HARVESTER && BotHarvesterCarryingCubes(bs))
+		return;
+	// if they care enough about themselves
+	selfPreservation = trap_Characteristic_BFloat(bs->character,
+		CHARACTERISTIC_SELFPRESERVATION, 0, 1);
+	if (selfPreservation < 0.5) {
+		return;
+	}
+	trap_EA_Use(bs->client);
+}
+
+/*
+==================
+BotUseMedkit
+==================
+ */
+void BotUseMedkit(bot_state_t *bs) {
+	float selfPreservation;
+
+	//if the bot has no medkit
+	if (bs->inventory[INVENTORY_MEDKIT] <= 0)
+		return;
+	//if the bot has enough health to survive
+	if (bs->inventory[INVENTORY_HEALTH] > 60)
+		return;
+	// if they care enough about themselves
+	selfPreservation = trap_Characteristic_BFloat(bs->character,
+		CHARACTERISTIC_SELFPRESERVATION, 0, 1);
+	if (selfPreservation < 0.5) {
+		return;
+	}
+	trap_EA_Use(bs->client);
+}
+
+/*
+==================
 BotUseKamikaze
 ==================
  */
@@ -1916,17 +1969,21 @@ void BotUseKamikaze(bot_state_t *bs) {
 				return;
 			}
 		}
-	} else if (gametype == GT_1FCTF) {
-		//never use kamikaze if the team flag carrier is visible
+	} else if (G_UsesTheWhiteFlag(gametype)) {
+		//never use kamikaze if the bot carries the flag
 		if (Bot1FCTFCarryingFlag(bs))
 			return;
-		c = BotTeamFlagCarrierVisible(bs);
-		if (c >= 0) {
-			BotEntityInfo(c, &entinfo);
-			VectorSubtract(entinfo.origin, bs->origin, dir);
-			if (VectorLengthSquared(dir) < Square(KAMIKAZE_DIST))
-				return;
+		//never use kamikaze if our team's flag carrier is visible in 1FCTF
+		if (gametype == GT_1FCTF) {
+			c = BotTeamFlagCarrierVisible(bs);
+			if (c >= 0) {
+				BotEntityInfo(c, &entinfo);
+				VectorSubtract(entinfo.origin, bs->origin, dir);
+				if (VectorLengthSquared(dir) < Square(KAMIKAZE_DIST))
+					return;
+			}
 		}
+		//always use kamikaze if the enemy flag carrier is visible
 		c = BotEnemyFlagCarrierVisible(bs);
 		if (c >= 0) {
 			BotEntityInfo(c, &entinfo);
@@ -2003,7 +2060,7 @@ void BotUseInvulnerability(bot_state_t *bs) {
 		return;
 	bs->invulnerability_time = FloatTime() + 0.2;
 	if (G_UsesTeamFlags(gametype) && !G_UsesTheWhiteFlag(gametype)) {
-		//never use kamikaze if the team flag carrier is visible
+		//never use invulnerability if the team flag carrier is visible
 		if (BotCTFCarryingFlag(bs))
 			return;
 		c = BotEnemyFlagCarrierVisible(bs);
@@ -2027,14 +2084,15 @@ void BotUseInvulnerability(bot_state_t *bs) {
 				return;
 			}
 		}
-	} else if (gametype == GT_1FCTF) {
-		//never use kamikaze if the team flag carrier is visible
+	} else if (G_UsesTheWhiteFlag(gametype)) {
+		//never use invulnerability if the bot carries the flag
 		if (Bot1FCTFCarryingFlag(bs))
 			return;
+		//never use invulnerability if the enemy carries the flag
 		c = BotEnemyFlagCarrierVisible(bs);
 		if (c >= 0)
 			return;
-		//if near enemy flag and the flag is visible
+		//if near the flag and the flag is visible
 		switch (BotTeam(bs)) {
 			case TEAM_RED: goal = &ctf_blueflag;
 				break;
@@ -2096,31 +2154,6 @@ void BotUseInvulnerability(bot_state_t *bs) {
 			}
 		}
 	}
-}
-
-/*
-==================
-BotBattleUseItems
-==================
- */
-void BotBattleUseItems(bot_state_t *bs) {
-	if (bs->inventory[INVENTORY_HEALTH] < 40) {
-		if (bs->inventory[INVENTORY_TELEPORTER] > 0) {
-			if (!BotCTFCarryingFlag(bs)
-					&& !Bot1FCTFCarryingFlag(bs)
-					&& !BotHarvesterCarryingCubes(bs)
-					) {
-				trap_EA_Use(bs->client);
-			}
-		}
-	}
-	if (bs->inventory[INVENTORY_HEALTH] < 60) {
-		if (bs->inventory[INVENTORY_MEDKIT] > 0) {
-			trap_EA_Use(bs->client);
-		}
-	}
-	BotUseKamikaze(bs);
-	BotUseInvulnerability(bs);
 }
 
 /*

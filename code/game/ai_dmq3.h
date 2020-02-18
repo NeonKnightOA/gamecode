@@ -47,7 +47,10 @@ void BotUpdateInventory(bot_state_t *bs);
 //update the inventory during battle
 void BotUpdateBattleInventory(bot_state_t *bs, int enemy);
 //use holdable items during battle
-void BotBattleUseItems(bot_state_t *bs);
+void BotUseTeleporter(bot_state_t *bs);
+void BotUseMedkit(bot_state_t *bs);
+void BotUseKamikaze(bot_state_t *bs);
+void BotUseInvulnerability(bot_state_t *bs);
 //return true if the bot is dead
 qboolean BotIsDead(bot_state_t *bs);
 //returns true if the bot is in observer mode

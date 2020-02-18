@@ -2188,7 +2188,10 @@ int AINode_Battle_Fight(bot_state_t *bs) {
 		}
 	}
 	//use holdable items
-	BotBattleUseItems(bs);
+	BotUseTeleporter(bs);
+	BotUseMedkit(bs);
+	BotUseKamikaze(bs);
+	BotUseInvulnerability(bs);
 	//
 	bs->tfl = TFL_DEFAULT;
 	if (bot_grapple.integer) bs->tfl |= TFL_GRAPPLEHOOK;
@@ -2471,7 +2474,10 @@ int AINode_Battle_Retreat(bot_state_t *bs) {
 	//
 	BotTeamGoals(bs, qtrue);
 	//use holdable items
-	BotBattleUseItems(bs);
+	BotUseTeleporter(bs);
+	BotUseMedkit(bs);
+	BotUseKamikaze(bs);
+	BotUseInvulnerability(bs);
 	//get the current long term goal while retreating
 	if (!BotLongTermGoal(bs, bs->tfl, qtrue, &goal)) {
 		AIEnter_Battle_SuicidalFight(bs, "battle retreat: no way out");
