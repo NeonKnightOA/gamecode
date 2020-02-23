@@ -1882,8 +1882,6 @@ BotUseTeleporter
 ==================
  */
 void BotUseTeleporter(bot_state_t *bs) {
-	float selfPreservation;
-
 	//if the bot has no teleporter
 	if (bs->inventory[INVENTORY_TELEPORTER] <= 0)
 		return;
@@ -1897,12 +1895,6 @@ void BotUseTeleporter(bot_state_t *bs) {
 		return;
 	if (gametype == GT_HARVESTER && BotHarvesterCarryingCubes(bs))
 		return;
-	// if they care enough about themselves
-	selfPreservation = trap_Characteristic_BFloat(bs->character,
-		CHARACTERISTIC_SELFPRESERVATION, 0, 1);
-	if (selfPreservation < 0.5) {
-		return;
-	}
 	trap_EA_Use(bs->client);
 }
 
@@ -1912,20 +1904,12 @@ BotUseMedkit
 ==================
  */
 void BotUseMedkit(bot_state_t *bs) {
-	float selfPreservation;
-
 	//if the bot has no medkit
 	if (bs->inventory[INVENTORY_MEDKIT] <= 0)
 		return;
 	//if the bot has enough health to survive
 	if (bs->inventory[INVENTORY_HEALTH] > 60)
 		return;
-	// if they care enough about themselves
-	selfPreservation = trap_Characteristic_BFloat(bs->character,
-		CHARACTERISTIC_SELFPRESERVATION, 0, 1);
-	if (selfPreservation < 0.5) {
-		return;
-	}
 	trap_EA_Use(bs->client);
 }
 
