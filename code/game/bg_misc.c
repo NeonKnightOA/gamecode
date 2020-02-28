@@ -1889,6 +1889,9 @@ void MapInfoGet(const char* mapname, int gametype, mapinfo_result_t *result) {
 		if (Q_strequal(keyBuffer, "author")) {
 			if (mayRead) Q_strncpyz(result->author, token, sizeof (result->author));
 		}
+		if (Q_strequal(keyBuffer, "title")) {
+			if (mayRead) Q_strncpyz(result->description, token, sizeof (result->title));
+		}
 		if (Q_strequal(keyBuffer, "description")) {
 			if (mayRead) Q_strncpyz(result->description, token, sizeof (result->description));
 		}
