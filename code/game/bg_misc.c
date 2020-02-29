@@ -1795,10 +1795,10 @@ qboolean MatchesGametype(int gametype, const char* gametypeName) {
 	qboolean mayRead = qfalse;
 	switch (gametype) {
 		case GT_FFA:
-			if (Q_strequal(gametypeName, "dm")) mayRead = qtrue;
+			if (Q_strequal(gametypeName, "ffa") || Q_strequal(gametypeName, "dm")) mayRead = qtrue;
 			break;
 		case GT_TEAM:
-			if (Q_strequal(gametypeName, "team")) mayRead = qtrue;
+			if (Q_strequal(gametypeName, "team") || Q_strequal(gametypeName, "tdm")) mayRead = qtrue;
 			break;
 		case GT_TOURNAMENT:
 			if (Q_strequal(gametypeName, "tourney")) mayRead = qtrue;
@@ -1810,7 +1810,7 @@ qboolean MatchesGametype(int gametype, const char* gametypeName) {
 			if (Q_strequal(gametypeName, "1fctf")) mayRead = qtrue;
 			break;
 		case GT_OBELISK:
-			if (Q_strequal(gametypeName, "obelisk")) mayRead = qtrue;
+			if (Q_strequal(gametypeName, "overload") || Q_strequal(gametypeName, "obelisk")) mayRead = qtrue;
 			break;
 		case GT_HARVESTER:
 			if (Q_strequal(gametypeName, "harvester")) mayRead = qtrue;
@@ -1819,7 +1819,7 @@ qboolean MatchesGametype(int gametype, const char* gametypeName) {
 			if (Q_strequal(gametypeName, "elimination")) mayRead = qtrue;
 			break;
 		case GT_CTF_ELIMINATION:
-			if (Q_strequal(gametypeName, "ctfelim")) mayRead = qtrue;
+			if (Q_strequal(gametypeName, "ctfelim") || Q_strequal(gametypeName, "ctfelimination")) mayRead = qtrue;
 			break;
 		case GT_LMS:
 			if (Q_strequal(gametypeName, "lms")) mayRead = qtrue;
