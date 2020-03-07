@@ -1419,40 +1419,91 @@ static void UI_DrawClanName(rectDef_t *rect, float scale, vec4_t color, int text
 	Text_Paint(rect->x, rect->y, scale, color, UI_Cvar_VariableString("ui_teamName"), 0, 0, textStyle);
 }
 
-
-static void UI_SetCapFragLimits(qboolean uiVars)
+void UI_SetGameLimits(int cap, int frag, int time)
 {
-	int cap = 5;
-	int frag = 10;
-	if (uiVars) {
-		if (uiVars == qtrue) {
-			trap_Cvar_Set("ui_captureLimit", va("%d", cap));
-			trap_Cvar_Set("ui_fragLimit", va("%d", frag));
-		}
-		else if (uiVars == qfalse) {
-			trap_Cvar_Set("capturelimit", va("%d", cap));
-			trap_Cvar_Set("fraglimit", va("%d", frag));
-		}
-	}
-	else
-	{
-		if (uiInfo.gameTypes[ui_gameType.integer].gtEnum == GT_OBELISK) {
-			cap = 4;
-			frag = 0;
-		}
-		else if (uiInfo.gameTypes[ui_gameType.integer].gtEnum == GT_HARVESTER) {
-			cap = 15;
-			frag = 0;
-		}
-		else if (uiInfo.gameTypes[ui_gameType.integer].gtEnum == GT_DOMINATION) {
-			cap = 125;
-			frag = 0;
-		}
-		else if (uiInfo.gameTypes[ui_gameType.integer].gtEnum == GT_POSSESSION) {
-			frag = 125;
-			cap = 0;
+	if (cap < 0) {	/* We use negative numbers to specify a default value */
+		switch (uiInfo.gameTypes[ui_gameType.integer].gtEnum) {
+			case GT_DOUBLE_D:
+			case GT_OBELISK:
+				cap = 3;
+			case GT_1FCTF:
+				cap = 5;
+			case GT_CTF:
+			case GT_ELIMINATION:
+			case GT_CTF_ELIMINATION:
+				cap = 7;
+			case GT_HARVESTER:
+				cap = 30;
+			case GT_DOMINATION:
+				cap = 200;
+			default:
+				cap = 0;
 		}
 	}
+	trap_Cvar_Set("captureLimit", va("%d", cap));
+	if (frag < 0) {	/* We use negative numbers to specify a default value */
+		switch (uiInfo.gameTypes[ui_gameType.integer].gtEnum) {
+			case GT_FFA:
+			case GT_TOURNEY:
+				cap = 15;
+			case GT_TEAM:
+				cap = 50;
+			case GT_LMS:
+				cap = 7;
+			case GT_POSSESSION:
+				cap = 240;
+			default:
+				cap = 0;
+		}
+	}
+	trap_Cvar_Set("fragLimit", va("%d", frag));
+	if (time < 0) {	/* All gametypes have the same timelimit */
+		time = 15;
+	}
+	trap_Cvar_Set("timeLimit", va("%d", time));
+}
+void UI_SetUIGameLimits(int cap, int frag, int time)
+{
+	if (cap < 0) {	/* We use negative numbers to specify a default value */
+		switch (uiInfo.gameTypes[ui_gameType.integer].gtEnum) {
+			case GT_DOUBLE_D:
+			case GT_OBELISK:
+				cap = 3;
+			case GT_1FCTF:
+				cap = 5;
+			case GT_CTF:
+			case GT_ELIMINATION:
+			case GT_CTF_ELIMINATION:
+				cap = 7;
+			case GT_HARVESTER:
+				cap = 30;
+			case GT_DOMINATION:
+				cap = 200;
+			default:
+				cap = 0;
+		}
+	}
+	trap_Cvar_Set("ui_captureLimit", va("%d", cap));
+	if (frag < 0) {	/* We use negative numbers to specify a default value */
+		switch (uiInfo.gameTypes[ui_gameType.integer].gtEnum) {
+			case GT_FFA:
+			case GT_TOURNEY:
+				cap = 15;
+			case GT_TEAM:
+				cap = 50;
+			case GT_LMS:
+				cap = 7;
+			case GT_POSSESSION:
+				cap = 240;
+			default:
+				cap = 0;
+		}
+	}
+	trap_Cvar_Set("ui_fragLimit", va("%d", frag));
+	if (time < 0) {	/* All gametypes have the same timelimit */
+		time = 15;
+	}
+	trap_Cvar_Set("ui_timeLimit", va("%d", time));
 }
 // ui_gameType assumes gametype 0 is -1 ALL and will not show
 static void UI_DrawGameType(rectDef_t *rect, float scale, vec4_t color, int textStyle)
@@ -3148,7 +3199,7 @@ static qboolean UI_GameType_HandleKey(int flags, float *special, int key, qboole
 		}
 
 		trap_Cvar_SetValue("ui_gameType", ui_gameType.integer);
-		UI_SetCapFragLimits(qtrue);
+		UI_SetUIGameLimits(-1,-1,-1);
 		UI_LoadBestScores(uiInfo.mapList[ui_currentMap.integer].mapLoadName, uiInfo.gameTypes[ui_gameType.integer].gtEnum);
 		if (resetMap && oldCount != UI_MapCountByGameType(qtrue)) {
 			trap_Cvar_SetValue( "ui_currentMap", 0);
@@ -3776,7 +3827,7 @@ static void UI_StartSkirmish(qboolean next, char *name)
 	temp = trap_Cvar_VariableValue( "timelimit" );
 	trap_Cvar_Set("ui_saveTimeLimit", va("%i", temp));
 
-	UI_SetCapFragLimits(qfalse);
+	UI_SetGameLimits(-1,-1,-1);
 
 	temp = trap_Cvar_VariableValue( "cg_drawTimer" );
 	trap_Cvar_Set("ui_drawTimer", va("%i", temp));
@@ -4148,7 +4199,7 @@ static void UI_RunMenuScript(char **args)
 			}
 		}
 		else if (Q_strequal(name, "updateSPMenu") ) {
-			UI_SetCapFragLimits(qtrue);
+			UI_SetUIGameLimits(-1,-1,-1);
 			UI_MapCountByGameType(qtrue);
 			ui_mapIndex.integer = UI_GetIndexFromSelection(ui_currentMap.integer);
 			trap_Cvar_Set("ui_mapIndex", va("%d", ui_mapIndex.integer));
@@ -4165,7 +4216,7 @@ static void UI_RunMenuScript(char **args)
 			if (String_Parse(args, &name2)) {
 				Q_strncpyz(name, name2, MAX_NAME_LENGTH);
 			}
-			UI_SetCapFragLimits(qtrue);
+			UI_SetUIGameLimits(-1,-1,-1);
 			UI_MapCountByGameType(qtrue);
 			ui_mapIndex.integer = UI_GetIndexFromSelection(ui_currentMap.integer);
 			trap_Cvar_Set("ui_mapIndex", va("%d", ui_mapIndex.integer));

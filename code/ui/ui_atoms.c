@@ -220,7 +220,7 @@ static void UI_CalcPostGameStats( void ) {
 	char		fileName[MAX_QPATH];
 	char		info[MAX_INFO_STRING];
 	fileHandle_t f;
-	int size, game, time, adjustedTime;
+	int size, game, time, adjustedTime, oldCap, oldFrag, oldTime;
 	postGameInfo_t oldInfo;
 	postGameInfo_t newInfo;
 	qboolean newHigh = qfalse;
@@ -296,8 +296,10 @@ static void UI_CalcPostGameStats( void ) {
 	}
  
 	// put back all the ui overrides
-	trap_Cvar_Set("capturelimit", UI_Cvar_VariableString("ui_saveCaptureLimit"));
-	trap_Cvar_Set("fraglimit", UI_Cvar_VariableString("ui_saveFragLimit"));
+	oldCap = UI_Cvar_VariableString("ui_saveCaptureLimit");
+	oldFrag = UI_Cvar_VariableString("ui_saveFragLimit");
+	oldTime = UI_Cvar_VariableString("ui_saveTimeLimit");
+	UI_SetGameLimits(oldCap, oldFrag, oldTime);
 	trap_Cvar_Set("cg_drawTimer", UI_Cvar_VariableString("ui_drawTimer"));
 	trap_Cvar_Set("g_doWarmup", UI_Cvar_VariableString("ui_doWarmup"));
 	trap_Cvar_Set("g_Warmup", UI_Cvar_VariableString("ui_Warmup"));

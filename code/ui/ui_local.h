@@ -430,6 +430,8 @@ void UI_LoadArenasIntoMapList(void);
 // Changed RD
 qboolean SP_LoadGame(char *load_game, char *loadmap);
 // end changed RD
+void UI_SetGameLimits(int cap, int frag, int time);
+void UI_SetUIGameLimits(int cap, int frag, int time);
 
 //
 // ui_menu.c
