@@ -1050,8 +1050,8 @@ void G_InitBots( qboolean restart ) {
 		}
 
 		if ( !fragLimit && !timeLimit ) {
-			trap_Cvar_Set( "fraglimit", GT_FFA_DEFAULT_SCORELIMIT );
-			trap_Cvar_Set( "timelimit", GT_FFA_DEFAULT_TIMELIMIT );
+			trap_Cvar_Set( "fraglimit", GT_SINGLE_DEFAULT_SCORELIMIT );
+			trap_Cvar_Set( "timelimit", GT_SINGLE_DEFAULT_TIMELIMIT );
 		}
 
 		basedelay = BOT_BEGIN_DELAY_BASE;
