@@ -1422,85 +1422,85 @@ static void UI_DrawClanName(rectDef_t *rect, float scale, vec4_t color, int text
 
 static void UI_SetCapFragLimits(qboolean uiVars)
 {
-	char *cap;
-	char *frag;
-	char *time;
+	char *capLimit;
+	char *fragLimit;
+	char *timeLimit;
 	switch (uiInfo.gameTypes[ui_gameType.integer].gtEnum) {
 		case GT_FFA:
-			frag = GT_FFA_DEFAULT_SCORELIMIT;
-			cap = "0";
-			time = GT_FFA_DEFAULT_TIMELIMIT;
+			fragLimit = GT_FFA_DEFAULT_SCORELIMIT;
+			capLimit = "0";
+			timeLimit = GT_FFA_DEFAULT_TIMELIMIT;
 			break;
 		case GT_TOURNAMENT:
-			frag = GT_TOURNEY_DEFAULT_SCORELIMIT;
-			cap = "0";
-			time = GT_TOURNEY_DEFAULT_TIMELIMIT;
+			fragLimit = GT_TOURNEY_DEFAULT_SCORELIMIT;
+			capLimit = "0";
+			timeLimit = GT_TOURNEY_DEFAULT_TIMELIMIT;
 			break;
 		case GT_TEAM:
-			frag = GT_TEAM_DEFAULT_SCORELIMIT;
-			cap = "0";
-			time = GT_TEAM_DEFAULT_TIMELIMIT;
+			fragLimit = GT_TEAM_DEFAULT_SCORELIMIT;
+			capLimit = "0";
+			timeLimit = GT_TEAM_DEFAULT_TIMELIMIT;
 			break;
 		case GT_CTF:
-			frag = "0";
-			cap = GT_CTF_DEFAULT_SCORELIMIT;
-			time = GT_CTF_DEFAULT_TIMELIMIT;
+			fragLimit = "0";
+			capLimit = GT_CTF_DEFAULT_SCORELIMIT;
+			timeLimit = GT_CTF_DEFAULT_TIMELIMIT;
 			break;
 		case GT_1FCTF:
-			frag = "0";
-			cap = GT_1FCTF_DEFAULT_SCORELIMIT;
-			time = GT_1FCTF_DEFAULT_TIMELIMIT;
+			fragLimit = "0";
+			capLimit = GT_1FCTF_DEFAULT_SCORELIMIT;
+			timeLimit = GT_1FCTF_DEFAULT_TIMELIMIT;
 			break;
 		case GT_OBELISK:
-			frag = "0";
-			cap = GT_OBELISK_DEFAULT_SCORELIMIT;
-			time = GT_OBELISK_DEFAULT_TIMELIMIT;
+			fragLimit = "0";
+			capLimit = GT_OBELISK_DEFAULT_SCORELIMIT;
+			timeLimit = GT_OBELISK_DEFAULT_TIMELIMIT;
 			break;
 		case GT_HARVESTER:
-			frag = "0";
-			cap = GT_HARVESTER_DEFAULT_SCORELIMIT;
-			time = GT_HARVESTER_DEFAULT_TIMELIMIT;
+			fragLimit = "0";
+			capLimit = GT_HARVESTER_DEFAULT_SCORELIMIT;
+			timeLimit = GT_HARVESTER_DEFAULT_TIMELIMIT;
 			break;
 		case GT_ELIMINATION:
-			frag = "0";
-			cap = GT_ELIMINATION_DEFAULT_SCORELIMIT;
-			time = GT_ELIMINATION_DEFAULT_TIMELIMIT;
+			fragLimit = "0";
+			capLimit = GT_ELIMINATION_DEFAULT_SCORELIMIT;
+			timeLimit = GT_ELIMINATION_DEFAULT_TIMELIMIT;
 			break;
 		case GT_CTF_ELIMINATION:
-			frag = "0";
-			cap = GT_CTF_ELIMINATION_DEFAULT_SCORELIMIT;
-			time = GT_CTF_ELIMINATION_DEFAULT_TIMELIMIT;
+			fragLimit = "0";
+			capLimit = GT_CTF_ELIMINATION_DEFAULT_SCORELIMIT;
+			timeLimit = GT_CTF_ELIMINATION_DEFAULT_TIMELIMIT;
 			break;
 		case GT_LMS:
-			frag = GT_LMS_DEFAULT_SCORELIMIT;
-			cap = "0";
-			time = GT_LMS_DEFAULT_TIMELIMIT;
+			fragLimit = GT_LMS_DEFAULT_SCORELIMIT;
+			capLimit = "0";
+			timeLimit = GT_LMS_DEFAULT_TIMELIMIT;
 			break;
 		case GT_DOUBLE_D:
-			frag = "0";
-			cap = GT_DOUBLE_D_DEFAULT_SCORELIMIT;
-			time = GT_DOUBLE_D_DEFAULT_TIMELIMIT;
+			fragLimit = "0";
+			capLimit = GT_DOUBLE_D_DEFAULT_SCORELIMIT;
+			timeLimit = GT_DOUBLE_D_DEFAULT_TIMELIMIT;
 			break;
 		case GT_DOMINATION:
-			frag = "0";
-			cap = GT_DOMINATION_DEFAULT_SCORELIMIT;
-			time = GT_DOMINATION_DEFAULT_TIMELIMIT;
+			fragLimit = "0";
+			capLimit = GT_DOMINATION_DEFAULT_SCORELIMIT;
+			timeLimit = GT_DOMINATION_DEFAULT_TIMELIMIT;
 			break;
 		case GT_POSSESSION:
-			frag = GT_POSSESSION_DEFAULT_SCORELIMIT;
-			cap = "0";
-			time = GT_POSSESSION_DEFAULT_TIMELIMIT;
+			fragLimit = GT_POSSESSION_DEFAULT_SCORELIMIT;
+			capLimit = "0";
+			timeLimit = GT_POSSESSION_DEFAULT_TIMELIMIT;
 			break;
 	}
 	if (uiVars == qtrue) {
-		trap_Cvar_Set("ui_captureLimit", cap);
-		trap_Cvar_Set("ui_fragLimit", frag);
-		trap_Cvar_Set("ui_timeLimit", time);
+		trap_Cvar_Set("ui_captureLimit", capLimit);
+		trap_Cvar_Set("ui_fragLimit", fragLimit);
+		trap_Cvar_Set("ui_timeLimit", timeLimit);
 	}
 	else if (uiVars == qfalse) {
-		trap_Cvar_Set("capturelimit", cap);
-		trap_Cvar_Set("fraglimit", frag);
-		trap_Cvar_Set("timelimit", time);
+		trap_Cvar_Set("capturelimit", capLimit);
+		trap_Cvar_Set("fraglimit", fragLimit);
+		trap_Cvar_Set("timelimit", timeLimit);
 	}
 }
 // ui_gameType assumes gametype 0 is -1 ALL and will not show
